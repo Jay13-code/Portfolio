@@ -8,9 +8,7 @@ export default function JayPortfolio() {
       id: 1,
       title: "Assistant Manager",
       company: "Johnny’s Hamburger LTD",
-      location:  <main className="max-w-5xl mx-auto p-4 md:p-6">
-        {/* Hero */}
-        <section className="grid md:grid-cols-2 gap-6 items-center bg-gradient-to-br from-slate-900 to-gray-800 p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg relative overflow-hidden">"oronto, ON",
+      location: "Toronto, ON",
       date: "Dec 2024 – Present",
       bullets: [
         "Led a team of 9 food service members, ensuring top-tier customer service and compliance with company standards.",
