@@ -12,6 +12,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #0f172a;
   color: #e5e7eb;
+  overflow-x: hidden;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  p {
+    font-size: 0.875rem;
+  }
+}
+
+/* Container padding for mobile */
+.container-padding {
+  padding: 1rem;
+}
+@media (min-width: 640px) {
+  .container-padding {
+    padding: 1.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .container-padding {
+    padding: 2rem;
+  }
 }
 
 @keyframes fade-in-up {

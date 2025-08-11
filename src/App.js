@@ -8,7 +8,9 @@ export default function JayPortfolio() {
       id: 1,
       title: "Assistant Manager",
       company: "Johnny’s Hamburger LTD",
-      location: "Toronto, ON",
+      location:  <main className="max-w-5xl mx-auto p-4 md:p-6">
+        {/* Hero */}
+        <section className="grid md:grid-cols-2 gap-6 items-center bg-gradient-to-br from-slate-900 to-gray-800 p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg relative overflow-hidden">"oronto, ON",
       date: "Dec 2024 – Present",
       bullets: [
         "Led a team of 9 food service members, ensuring top-tier customer service and compliance with company standards.",
@@ -263,20 +265,20 @@ export default function JayPortfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 text-gray-100 font-sans transition-colors duration-700">
-  <div className="sticky top-0 z-50 bg-slate-900/70 backdrop-blur border-b border-slate-800">
-        <header className="max-w-5xl mx-auto p-4 md:p-6 flex items-center justify-between">
+  <header className="max-w-5xl mx-auto p-4 md:p-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-xl font-semibold text-sky-400 drop-shadow-lg animate-pulse">Jay Sojitra</h1>
+            <h1 className="text-2xl md:text-xl font-semibold text-sky-400 drop-shadow-lg animate-pulse">Jay Sojitra</h1>
             <p className="text-sm text-gray-300">Newcomer Information & Service Management Professional</p>
           </div>
-          <nav className="flex gap-4 items-center">
+          <nav className="flex flex-wrap gap-4 items-center">
             <a href="#about" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">About</a>
             <a href="#skills" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">Skills</a>
             <a href="#experience" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">Experience</a>
             <a href="#contact" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">Contact</a>
           </nav>
-        </header>
-      </div>
+        </div>
+      </header>
 
   <main className="max-w-5xl mx-auto p-6">
         {/* Hero */}
@@ -353,7 +355,7 @@ export default function JayPortfolio() {
         {/* About */}
         <motion.section
           id="about"
-          className="mt-8 bg-slate-800 p-6 rounded-2xl shadow-lg scroll-mt-24"
+          className="mt-8 bg-slate-800 p-6 rounded-2xl shadow-lg"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -369,7 +371,7 @@ export default function JayPortfolio() {
         {/* Skills & Certifications */}
         <motion.section
           id="skills"
-          className="mt-8 grid md:grid-cols-2 gap-6 scroll-mt-24"
+          className="mt-8 grid md:grid-cols-2 gap-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -402,7 +404,7 @@ export default function JayPortfolio() {
         </motion.section>
 
         {/* Experience */}
-  <section id="experience" className="mt-8 relative py-8 scroll-mt-24">
+        <section id="experience" className="mt-8 relative py-8">
           <h3 className="text-2xl font-semibold mb-8 text-sky-300">Experience</h3>
 
           {/* Center timeline line */}
@@ -443,29 +445,29 @@ export default function JayPortfolio() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     whileHover={{ y: -6, scale: 1.01 }}
                     className={
-                      `group bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-sky-900/60 hover:border-sky-600/70 transition will-change-transform ` +
-                      `relative ${isLeft ? "md:mr-auto md:w-1/2 md:pr-10" : "md:ml-auto md:w-1/2 md:pl-10"} ` +
+                      `group bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg border border-sky-900/60 hover:border-sky-600/70 transition will-change-transform ` +
+                      `relative ml-8 sm:ml-0 ${isLeft ? "md:mr-auto md:w-[calc(50%-2rem)]" : "md:ml-auto md:w-[calc(50%-2rem)]"} ` +
                       `md:hover:shadow-xl`
                     }
                   >
-                    <header className="flex items-start justify-between gap-4">
+                    <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                       <div className="flex items-start gap-3">
                         <span className="mt-0.5 inline-flex items-center justify-center p-2 rounded-xl bg-slate-900 border border-slate-700/80 shadow text-current">
                           <Icon name={meta.icon} className={meta.iconClass} />
                         </span>
                         <div>
-                          <h4 className="text-lg font-semibold text-sky-200 tracking-tight">{exp.title}</h4>
+                          <h4 className="text-base sm:text-lg font-semibold text-sky-200 tracking-tight">{exp.title}</h4>
                           <div className="text-sm text-gray-300">{exp.company} — {exp.location}</div>
                           <div className="mt-2 flex flex-wrap gap-2">
                             <motion.span whileHover={{ scale: 1.06 }} className={meta.badgeClass}>
                               {meta.category}
                             </motion.span>
-                            <span className="px-2 py-0.5 text-xs rounded-full bg-slate-900/60 text-gray-300 border border-slate-700">{exp.company}</span>
-                            <span className="px-2 py-0.5 text-xs rounded-full bg-slate-900/60 text-gray-300 border border-slate-700">{exp.location}</span>
+                            <span className="hidden sm:inline-block px-2 py-0.5 text-xs rounded-full bg-slate-900/60 text-gray-300 border border-slate-700">{exp.company}</span>
+                            <span className="hidden sm:inline-block px-2 py-0.5 text-xs rounded-full bg-slate-900/60 text-gray-300 border border-slate-700">{exp.location}</span>
                           </div>
                         </div>
                       </div>
-                      <div className="text-sm text-gray-400 whitespace-nowrap">{exp.date}</div>
+                      <div className="text-sm text-gray-400 whitespace-nowrap order-first sm:order-none">{exp.date}</div>
                     </header>
 
                     <details className="mt-4 group">
@@ -493,7 +495,7 @@ export default function JayPortfolio() {
         {/* Contact */}
         <motion.section
           id="contact"
-          className="mt-8 bg-slate-800 p-6 rounded-2xl shadow-lg scroll-mt-24"
+          className="mt-8 bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
