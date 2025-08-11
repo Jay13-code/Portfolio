@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import ResumePDF from "./Resume.pdf";
 
 export default function JayPortfolio() {
   const experiences = [
@@ -123,7 +122,6 @@ export default function JayPortfolio() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  // Experience category metadata and icons
   const getExperienceMeta = (title = "") => {
     const t = title.toLowerCase();
     if (t.includes("assistant manager")) {
@@ -263,7 +261,7 @@ export default function JayPortfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 text-gray-100 font-sans transition-colors duration-700">
-  <header className="max-w-5xl mx-auto p-4 md:p-6">
+      <header className="max-w-5xl mx-auto p-4 md:p-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-xl font-semibold text-sky-400 drop-shadow-lg animate-pulse">Jay Sojitra</h1>
@@ -278,9 +276,9 @@ export default function JayPortfolio() {
         </div>
       </header>
 
-  <main className="max-w-5xl mx-auto p-6">
+      <main className="max-w-5xl mx-auto p-4 md:p-6">
         {/* Hero */}
-        <section className="grid md:grid-cols-2 gap-6 items-center bg-gradient-to-br from-slate-900 to-gray-800 p-8 rounded-2xl shadow-lg relative overflow-hidden">
+        <section className="grid md:grid-cols-2 gap-6 items-center bg-gradient-to-br from-slate-900 to-gray-800 p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg relative overflow-hidden">
           {/* Animated background orbs */}
           <motion.div
             className="absolute -top-10 -left-10 w-40 h-40 bg-sky-500/20 rounded-full blur-2xl animate-pulse z-0"
@@ -292,12 +290,7 @@ export default function JayPortfolio() {
             animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
             transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
           />
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeSlideUp}
-            className="relative z-10"
-          >
+          <motion.div initial="hidden" animate="visible" variants={fadeSlideUp} className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-sky-300 drop-shadow animate-fade-in-up">
               Hi, I’m Jay — I build service systems that help people settle and thrive.
             </h2>
@@ -305,7 +298,7 @@ export default function JayPortfolio() {
 
             <div className="mt-6 flex gap-3">
               <a
-                href={ResumePDF}
+                href="/Resume.pdf"
                 download
                 className="inline-block px-4 py-2 rounded-md border border-sky-400 hover:shadow-lg text-sm text-sky-200 hover:bg-sky-900 transition"
               >
@@ -401,117 +394,118 @@ export default function JayPortfolio() {
           </div>
         </motion.section>
 
-        {/* Experience */}
+        {/* Experience - Professional Timeline */}
         <section id="experience" className="mt-8 relative py-8">
           <h3 className="text-2xl font-semibold mb-8 text-sky-300">Experience</h3>
-          
-          <div className="relative min-h-[500px] flex items-center justify-center">
-            {/* Rotating Circle of Icons */}
-            <div className="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] mx-auto">
+
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-sky-500/40 via-slate-600/40 to-transparent" />
+
+            <div className="space-y-6">
               {experiences.map((exp, idx) => {
                 const meta = getExperienceMeta(exp.title);
-                const angle = (idx * (360 / experiences.length)) * (Math.PI / 180);
-                const radius = 150; // Adjust this value to change circle size
-                const x = Math.cos(angle) * radius;
-                const y = Math.sin(angle) * radius;
-                
                 return (
-                  <motion.div
+                  <motion.article
                     key={exp.id}
-                    className="absolute left-1/2 top-1/2"
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ 
-                      opacity: 1, 
-                      scale: 1,
-                      x: x,
-                      y: y,
-                      rotate: [0, 360],
-                    }}
-                    transition={{
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: "linear",
-                      rotate: {
-                        duration: 20,
-                        repeat: Infinity,
-                        ease: "linear"
-                      }
-                    }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={fadeSlideUp}
+                    className="relative pl-12"
                   >
-                    <motion.button
-                      onClick={() => document.getElementById(`exp-details-${exp.id}`).showModal()}
-                      className="relative -translate-x-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-800 border-2 border-sky-500/30 hover:border-sky-400 shadow-lg hover:shadow-sky-500/20 transition group"
-                      whileHover={{ scale: 1.2 }}
-                    >
-                      <span className="absolute inset-0 rounded-full bg-sky-400/20 opacity-0 group-hover:opacity-100 transition" />
-                      <Icon name={meta.icon} className={`w-6 h-6 ${meta.iconClass}`} />
-                    </motion.button>
-                  </motion.div>
-                );
-              })}
-              
-              {/* Center piece */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-slate-800 border-4 border-sky-500/30 shadow-lg flex items-center justify-center">
-                <span className="text-sky-400 font-semibold">Experience</span>
-              </div>
-            </div>
+                    {/* Dot on the line */}
+                    <span className="absolute left-[13px] top-5 -ml-1.5 w-3 h-3 rounded-full bg-sky-400 border-2 border-slate-900 shadow" />
 
-            {/* Experience Details Modals */}
-            {experiences.map((exp) => {
-              const meta = getExperienceMeta(exp.title);
-              return (
-                <dialog
-                  key={exp.id}
-                  id={`exp-details-${exp.id}`}
-                  className="backdrop:bg-slate-900/90 bg-slate-800 text-gray-100 rounded-xl border border-sky-500/30 p-0 w-full max-w-lg mx-4"
-                  onClick={(e) => {
-                    if (e.target === e.currentTarget) {
-                      e.currentTarget.close();
-                    }
-                  }}
-                >
-                  <div className="p-6">
-                    <div className="flex items-start gap-4">
-                      <span className="mt-0.5 inline-flex items-center justify-center p-2 rounded-xl bg-slate-900 border border-slate-700/80 shadow text-current">
-                        <Icon name={meta.icon} className={meta.iconClass} />
-                      </span>
-                      <div className="flex-1">
-                        <h4 className="text-xl font-semibold text-sky-200">{exp.title}</h4>
-                        <p className="text-gray-300">{exp.company} — {exp.location}</p>
-                        <p className="text-sky-400">{exp.date}</p>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          <motion.span whileHover={{ scale: 1.06 }} className={meta.badgeClass}>
-                            {meta.category}
-                          </motion.span>
+                    {/* Card */}
+                    <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4 md:p-5 hover:shadow-lg hover:border-sky-700/40 transition">
+                      <div className="flex items-start gap-4">
+                        <span className="inline-flex items-center justify-center p-2 rounded-lg bg-slate-900 border border-slate-700/80">
+                          <Icon name={meta.icon} className={meta.iconClass} />
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h4 className="text-lg font-semibold text-sky-200 truncate">{exp.title}</h4>
+                            <span className={meta.badgeClass}>{meta.category}</span>
+                          </div>
+                          <p className="text-sm text-gray-300 mt-1">
+                            {exp.company} — {exp.location}
+                          </p>
+                          <p className="text-xs text-sky-400">{exp.date}</p>
+
+                          {/* Preview of bullets */}
+                          <ul className="mt-3 space-y-1 text-gray-200 text-sm list-disc ml-4">
+                            {exp.bullets.slice(0, 2).map((b, i) => (
+                              <li key={i}>{b}</li>
+                            ))}
+                          </ul>
+
+                          <div className="mt-4 flex gap-3">
+                            <button
+                              onClick={() => document.getElementById(`exp-details-${exp.id}`).showModal()}
+                              className="px-3 py-1.5 text-sm rounded-md border border-sky-500/40 text-sky-200 hover:bg-sky-900/40"
+                            >
+                              Details
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    
-                    <div className="mt-4">
-                      <h5 className="font-medium text-sky-300 mb-2">Responsibilities & Achievements</h5>
-                      <ul className="space-y-2 text-gray-200">
-                        {exp.bullets.map((bullet, idx) => (
-                          <li key={idx} className="flex gap-2">
-                            <span className="text-sky-400">•</span>
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="mt-6 flex justify-end">
-                      <button
-                        onClick={(e) => e.currentTarget.closest('dialog').close()}
-                        className="px-4 py-2 text-sm text-sky-200 hover:text-white transition"
-                      >
-                        Close
-                      </button>
+                  </motion.article>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Details modals */}
+          {experiences.map((exp) => {
+            const meta = getExperienceMeta(exp.title);
+            return (
+              <dialog
+                key={exp.id}
+                id={`exp-details-${exp.id}`}
+                className="backdrop:bg-slate-900/90 bg-slate-800 text-gray-100 rounded-xl border border-sky-500/30 p-0 w-full max-w-lg mx-4"
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) e.currentTarget.close();
+                }}
+              >
+                <div className="p-6">
+                  <div className="flex items-start gap-4">
+                    <span className="mt-0.5 inline-flex items-center justify-center p-2 rounded-xl bg-slate-900 border border-slate-700/80 shadow text-current">
+                      <Icon name={meta.icon} className={meta.iconClass} />
+                    </span>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-semibold text-sky-200">{exp.title}</h4>
+                      <p className="text-gray-300">{exp.company} — {exp.location}</p>
+                      <p className="text-sky-400">{exp.date}</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <span className={meta.badgeClass}>{meta.category}</span>
+                      </div>
                     </div>
                   </div>
-                </dialog>
-              );
-            })}
-          </div>
+                  <div className="mt-4">
+                    <h5 className="font-medium text-sky-300 mb-2">Responsibilities & Achievements</h5>
+                    <ul className="space-y-2 text-gray-200">
+                      {exp.bullets.map((bullet, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-sky-400">•</span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 flex justify-end">
+                    <button
+                      onClick={(e) => e.currentTarget.closest("dialog").close()}
+                      className="px-4 py-2 text-sm text-sky-200 hover:text-white transition"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </dialog>
+            );
+          })}
         </section>
 
         {/* Contact */}
@@ -548,16 +542,10 @@ export default function JayPortfolio() {
               rows={5}
             />
             <div className="md:col-span-2 flex gap-3">
-              <button
-                type="submit"
-                className="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-500 transition"
-              >
+              <button type="submit" className="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-500 transition">
                 Send
               </button>
-              <a
-                href="mailto:sojitrajay13@gmail.com"
-                className="px-4 py-2 border border-sky-400 rounded-md text-sky-200 hover:bg-sky-900 transition"
-              >
+              <a href="mailto:sojitrajay13@gmail.com" className="px-4 py-2 border border-sky-400 rounded-md text-sky-200 hover:bg-sky-900 transition">
                 Email directly
               </a>
             </div>
@@ -566,11 +554,7 @@ export default function JayPortfolio() {
 
         {/* Footer */}
         <footer className="mt-10 text-center text-sm text-gray-500">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
-          >
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
             © 2025 Jay Sojitra. All rights reserved.
           </motion.span>
         </footer>
