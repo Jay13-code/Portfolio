@@ -272,6 +272,13 @@ export default function JayPortfolio() {
             <a href="#skills" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">Skills</a>
             <a href="#experience" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">Experience</a>
             <a href="#contact" className="text-sm hover:underline text-gray-200 hover:text-sky-400 transition">Contact</a>
+            <a
+              href={`${process.env.PUBLIC_URL}/Resume.pdf`}
+              download
+              className="text-sm hover:underline text-sky-300 hover:text-sky-200 transition"
+            >
+              Resume
+            </a>
           </nav>
         </div>
       </header>
@@ -298,7 +305,7 @@ export default function JayPortfolio() {
 
             <div className="mt-6 flex gap-3">
               <a
-                href="/Resume.pdf"
+                href={`${process.env.PUBLIC_URL}/Resume.pdf`}
                 download
                 className="inline-block px-4 py-2 rounded-md border border-sky-400 hover:shadow-lg text-sm text-sky-200 hover:bg-sky-900 transition"
               >
