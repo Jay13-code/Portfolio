@@ -404,87 +404,111 @@ export default function JayPortfolio() {
         {/* Experience */}
         <section id="experience" className="mt-8 relative py-8">
           <h3 className="text-2xl font-semibold mb-8 text-sky-300">Experience</h3>
-
-          {/* Center timeline line */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-sky-600/40 via-sky-400/30 to-transparent" />
-          <div className="md:hidden absolute left-4 top-0 bottom-0 w-px bg-sky-700/40" />
-
-          <div className="space-y-12">
-            {experiences.map((exp, idx) => {
-              const isLeft = idx % 2 === 0;
-              const meta = getExperienceMeta(exp.title);
-              const connectorClass = isLeft
-                ? "hidden md:block absolute top-7 h-0.5 w-10 bg-gradient-to-l from-sky-500/40 to-transparent right-1/2 -mr-10"
-                : "hidden md:block absolute top-7 h-0.5 w-10 bg-gradient-to-r from-sky-500/40 to-transparent left-1/2 -ml-10";
-              return (
-                <div key={exp.id} className="relative">
-                  {/* Timeline dot */}
-                  <span className="hidden md:block absolute left-1/2 -translate-x-1/2 top-6">
-                    <span className="relative flex h-4 w-4">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400/50" />
-                      <span className="relative inline-flex rounded-full h-4 w-4 bg-sky-400 ring-4 ring-slate-900" />
-                    </span>
-                  </span>
-                  {/* Mobile dot */}
-                  <span className="md:hidden absolute left-4 top-6">
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400/40" />
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ring-2 ring-slate-900" />
-                    </span>
-                  </span>
-
-                  {/* Connector from center line to card */}
-                  <span className={connectorClass} />
-
-                  <motion.article
-                    initial={{ opacity: 0, y: 30, x: isLeft ? -20 : 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    whileHover={{ y: -6, scale: 1.01 }}
-                    className={
-                      `group bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg border border-sky-900/60 hover:border-sky-600/70 transition will-change-transform ` +
-                      `relative ml-8 sm:ml-0 ${isLeft ? "md:mr-auto md:w-[calc(50%-2rem)]" : "md:ml-auto md:w-[calc(50%-2rem)]"} ` +
-                      `md:hover:shadow-xl`
-                    }
+          
+          <div className="relative min-h-[500px] flex items-center justify-center">
+            {/* Rotating Circle of Icons */}
+            <div className="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] mx-auto">
+              {experiences.map((exp, idx) => {
+                const meta = getExperienceMeta(exp.title);
+                const angle = (idx * (360 / experiences.length)) * (Math.PI / 180);
+                const radius = 150; // Adjust this value to change circle size
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                
+                return (
+                  <motion.div
+                    key={exp.id}
+                    className="absolute left-1/2 top-1/2"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: 1,
+                      x: x,
+                      y: y,
+                      rotate: [0, 360],
+                    }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear",
+                      rotate: {
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }
+                    }}
                   >
-                    <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                      <div className="flex items-start gap-3">
-                        <span className="mt-0.5 inline-flex items-center justify-center p-2 rounded-xl bg-slate-900 border border-slate-700/80 shadow text-current">
-                          <Icon name={meta.icon} className={meta.iconClass} />
-                        </span>
-                        <div>
-                          <h4 className="text-base sm:text-lg font-semibold text-sky-200 tracking-tight">{exp.title}</h4>
-                          <div className="text-sm text-gray-300">{exp.company} — {exp.location}</div>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            <motion.span whileHover={{ scale: 1.06 }} className={meta.badgeClass}>
-                              {meta.category}
-                            </motion.span>
-                            <span className="hidden sm:inline-block px-2 py-0.5 text-xs rounded-full bg-slate-900/60 text-gray-300 border border-slate-700">{exp.company}</span>
-                            <span className="hidden sm:inline-block px-2 py-0.5 text-xs rounded-full bg-slate-900/60 text-gray-300 border border-slate-700">{exp.location}</span>
-                          </div>
+                    <motion.button
+                      onClick={() => document.getElementById(`exp-details-${exp.id}`).showModal()}
+                      className="relative -translate-x-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-800 border-2 border-sky-500/30 hover:border-sky-400 shadow-lg hover:shadow-sky-500/20 transition group"
+                      whileHover={{ scale: 1.2 }}
+                    >
+                      <span className="absolute inset-0 rounded-full bg-sky-400/20 opacity-0 group-hover:opacity-100 transition" />
+                      <Icon name={meta.icon} className={`w-6 h-6 ${meta.iconClass}`} />
+                    </motion.button>
+                  </motion.div>
+                );
+              })}
+              
+              {/* Center piece */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-slate-800 border-4 border-sky-500/30 shadow-lg flex items-center justify-center">
+                <span className="text-sky-400 font-semibold">Experience</span>
+              </div>
+            </div>
+
+            {/* Experience Details Modals */}
+            {experiences.map((exp) => {
+              const meta = getExperienceMeta(exp.title);
+              return (
+                <dialog
+                  key={exp.id}
+                  id={`exp-details-${exp.id}`}
+                  className="backdrop:bg-slate-900/90 bg-slate-800 text-gray-100 rounded-xl border border-sky-500/30 p-0 w-full max-w-lg mx-4"
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget) {
+                      e.currentTarget.close();
+                    }
+                  }}
+                >
+                  <div className="p-6">
+                    <div className="flex items-start gap-4">
+                      <span className="mt-0.5 inline-flex items-center justify-center p-2 rounded-xl bg-slate-900 border border-slate-700/80 shadow text-current">
+                        <Icon name={meta.icon} className={meta.iconClass} />
+                      </span>
+                      <div className="flex-1">
+                        <h4 className="text-xl font-semibold text-sky-200">{exp.title}</h4>
+                        <p className="text-gray-300">{exp.company} — {exp.location}</p>
+                        <p className="text-sky-400">{exp.date}</p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <motion.span whileHover={{ scale: 1.06 }} className={meta.badgeClass}>
+                            {meta.category}
+                          </motion.span>
                         </div>
                       </div>
-                      <div className="text-sm text-gray-400 whitespace-nowrap order-first sm:order-none">{exp.date}</div>
-                    </header>
-
-                    <details className="mt-4 group">
-                      <summary className="cursor-pointer select-none flex items-center gap-2 text-gray-200 hover:text-sky-400 transition">
-                        <span className="chevron inline-block w-4 h-4 text-sky-400 transform transition group-open:rotate-180">
-                          <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                          </svg>
-                        </span>
-                        Responsibilities & achievements
-                      </summary>
-                      <ul className="mt-3 list-disc list-inside space-y-1 text-gray-200">
-                        {exp.bullets.map((b, i) => (
-                          <li key={i}>{b}</li>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <h5 className="font-medium text-sky-300 mb-2">Responsibilities & Achievements</h5>
+                      <ul className="space-y-2 text-gray-200">
+                        {exp.bullets.map((bullet, idx) => (
+                          <li key={idx} className="flex gap-2">
+                            <span className="text-sky-400">•</span>
+                            <span>{bullet}</span>
+                          </li>
                         ))}
                       </ul>
-                    </details>
-                  </motion.article>
-                </div>
+                    </div>
+                    
+                    <div className="mt-6 flex justify-end">
+                      <button
+                        onClick={(e) => e.currentTarget.closest('dialog').close()}
+                        className="px-4 py-2 text-sm text-sky-200 hover:text-white transition"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </dialog>
               );
             })}
           </div>
